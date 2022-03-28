@@ -1,0 +1,52 @@
+DROP TABLE HR.JOBS_X CASCADE CONSTRAINTS;
+
+CREATE TABLE HR.JOBS_X
+(
+  JOB_ID      VARCHAR2(10 BYTE),
+  JOB_TITLE   VARCHAR2(35 BYTE),
+  MIN_SALARY  NUMBER(6),
+  MAX_SALARY  NUMBER(6)
+)
+TABLESPACE USERS
+PCTFREE    10
+INITRANS   1
+MAXTRANS   255
+STORAGE    (
+            INITIAL          64K
+            NEXT             1M
+            MINEXTENTS       1
+            MAXEXTENTS       UNLIMITED
+            PCTINCREASE      0
+            BUFFER_POOL      DEFAULT
+           )
+LOGGING 
+NOCOMPRESS 
+NOCACHE;
+
+COMMENT ON TABLE HR.JOBS_X IS 'jobs table with job titles and salary ranges. Contains 19 rows.
+References with employees and job_history table.';
+
+COMMENT ON COLUMN HR.JOBS_X.JOB_ID IS 'Primary key of jobs table.';
+
+COMMENT ON COLUMN HR.JOBS_X.JOB_TITLE IS 'A not null column that shows job title, e.g. AD_VP, FI_ACCOUNTANT';
+
+COMMENT ON COLUMN HR.JOBS_X.MIN_SALARY IS 'Minimum salary for a job title.';
+
+COMMENT ON COLUMN HR.JOBS_X.MAX_SALARY IS 'Maximum salary for a job title';
+
+
+CREATE UNIQUE INDEX HR.JOBS_X_JOB_ID_IDX ON HR.JOBS_X
+(JOB_ID)
+LOGGING
+TABLESPACE USERS
+PCTFREE    10
+INITRANS   2
+MAXTRANS   255
+STORAGE    (
+            INITIAL          64K
+            NEXT             1M
+            MINEXTENTS       1
+            MAXEXTENTS       UNLIMITED
+            PCTINCREASE      0
+            BUFFER_POOL      DEFAULT
+           );
