@@ -7,7 +7,8 @@ CREATE OR REPLACE function HR.fn_get_dept_name(
         select department_name
         into v_test_name
         from departments
-        where department_id = p_dept_no;
+        where department_id = p_dept_no
+        order by 1, 2;
 
     return v_test_name;
 end;
