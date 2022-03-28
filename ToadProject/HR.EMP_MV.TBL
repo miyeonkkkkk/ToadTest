@@ -1,0 +1,41 @@
+DROP TABLE HR.EMP_MV CASCADE CONSTRAINTS;
+
+CREATE TABLE HR.EMP_MV
+(
+  DEPARTMENT_ID  NUMBER(4),
+  "SUM(SALARY)"  NUMBER
+)
+TABLESPACE HRTS
+PCTFREE    10
+INITRANS   1
+MAXTRANS   255
+STORAGE    (
+            INITIAL          64K
+            NEXT             1M
+            MINEXTENTS       1
+            MAXEXTENTS       UNLIMITED
+            PCTINCREASE      0
+            BUFFER_POOL      DEFAULT
+           )
+LOGGING 
+NOCOMPRESS 
+NOCACHE;
+
+
+-- Index I_SNAP$_EMP_MV will be created/dropped automatically by Oracle with the associated materialized view.
+-- The following script for this index is for informational purposes only.
+CREATE UNIQUE INDEX HR.I_SNAP$_EMP_MV ON HR.EMP_MV
+(SYS_OP_MAP_NONNULL("DEPARTMENT_ID"))
+LOGGING
+TABLESPACE HRTS
+PCTFREE    10
+INITRANS   2
+MAXTRANS   255
+STORAGE    (
+            INITIAL          64K
+            NEXT             1M
+            MINEXTENTS       1
+            MAXEXTENTS       UNLIMITED
+            PCTINCREASE      0
+            BUFFER_POOL      DEFAULT
+           );
