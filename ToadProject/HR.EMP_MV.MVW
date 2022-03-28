@@ -1,0 +1,45 @@
+DROP MATERIALIZED VIEW HR.EMP_MV;
+
+CREATE MATERIALIZED VIEW HR.EMP_MV 
+    (DEPARTMENT_ID,"SUM(SALARY)")
+TABLESPACE HRTS
+PCTFREE    10
+INITRANS   2
+MAXTRANS   255
+STORAGE    (
+            INITIAL          64K
+            NEXT             1M
+            MINEXTENTS       1
+            MAXEXTENTS       UNLIMITED
+            PCTINCREASE      0
+            BUFFER_POOL      DEFAULT
+           )
+NOCACHE
+NOLOGGING
+NOCOMPRESS
+BUILD IMMEDIATE
+USING INDEX
+            TABLESPACE HRTS
+            PCTFREE    10
+            INITRANS   2
+            MAXTRANS   255
+            STORAGE    (
+                        INITIAL          64K
+                        NEXT             1M
+                        MINEXTENTS       1
+                        MAXEXTENTS       UNLIMITED
+                        PCTINCREASE      0
+                        BUFFER_POOL      DEFAULT
+                       )
+REFRESH FAST ON COMMIT
+WITH PRIMARY KEY
+AS 
+select d.department_id, sum(salary)
+from employees e, departments d
+where e.department_id = d.department_id
+group by d.department_id;
+
+
+COMMENT ON MATERIALIZED VIEW HR.EMP_MV IS 'snapshot table for snapshot HR.EMP_MV';
+
+-- Index I_SNAP$_EMP_MV will be created/dropped automatically by Oracle with the associated materialized view.
