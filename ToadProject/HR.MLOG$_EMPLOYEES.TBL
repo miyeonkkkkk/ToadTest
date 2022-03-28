@@ -1,0 +1,30 @@
+DROP TABLE HR.MLOG$_EMPLOYEES CASCADE CONSTRAINTS;
+
+CREATE TABLE HR.MLOG$_EMPLOYEES
+(
+  DEPARTMENT_ID    NUMBER(4),
+  SALARY           NUMBER(8,2),
+  M_ROW$$          VARCHAR2(255 BYTE),
+  SEQUENCE$$       NUMBER,
+  SNAPTIME$$       DATE,
+  DMLTYPE$$        VARCHAR2(1 BYTE),
+  OLD_NEW$$        VARCHAR2(1 BYTE),
+  CHANGE_VECTOR$$  RAW(255),
+  XID$$            NUMBER
+)
+TABLESPACE HRTS
+PCTFREE    10
+INITRANS   1
+MAXTRANS   255
+STORAGE    (
+            PCTINCREASE      0
+            BUFFER_POOL      DEFAULT
+           )
+LOGGING 
+NOCOMPRESS 
+NOCACHE;
+
+COMMENT ON TABLE HR.MLOG$_EMPLOYEES IS 'snapshot log for master table HR.EMPLOYEES';
+
+
+-- Index I_MLOG$_EMPLOYEES will be created/dropped automatically by Oracle with the associated materialized view.
